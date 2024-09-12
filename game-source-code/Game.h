@@ -1,6 +1,7 @@
 #pragma once
 #include "GameInterface.h"
 #include "Text.h"
+#include "Maze.h"
 #include <raylib-cpp.hpp>
 
 class Game : public GameInterface {
@@ -28,6 +29,8 @@ private:
     float startTimer_; 
     bool helpWindow = false;
     bool gameplayWindow = false;
+
+    std::unique_ptr<Maze> maze_;
 
     void drawSplash();
     void drawStart();

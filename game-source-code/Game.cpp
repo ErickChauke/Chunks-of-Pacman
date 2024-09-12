@@ -34,7 +34,11 @@ void Game::update() {
     {   
         startTimer_ += GetFrameTime();
         if (startTimer_ >= startDuration_) 
-        {}
+        {
+            showingSplash_ = false;
+            pacman_->update(*maze_);
+            showGamePlay_=false;
+        }
         else{showGamePlay_=true;}
         if(IsKeyPressed(KEY_F1))
         {gameplayWindow=false; helpWindow=true; showGamePlay_=false;}
@@ -52,7 +56,10 @@ void Game::draw() {
     {drawStart();}
     else if(helpWindow)
     {drawControls();}
-    else{}
+    else{
+        window_.ClearBackground(raylib::Color::Black());
+        maze_->draw();
+    }
 
     window_.EndDrawing();
 }
