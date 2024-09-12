@@ -1,8 +1,10 @@
 #pragma once
+#include <raylib-cpp.hpp>
 #include "GameInterface.h"
 #include "Text.h"
+#include "Pacman.h"
 #include "Maze.h"
-#include <raylib-cpp.hpp>
+#include <memory>
 
 class Game : public GameInterface {
 public:
@@ -31,6 +33,7 @@ private:
     bool gameplayWindow = false;
 
     std::unique_ptr<Maze> maze_;
+    std::unique_ptr<Pacman> pacman_;
 
     void drawSplash();
     void drawStart();

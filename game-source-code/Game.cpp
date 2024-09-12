@@ -59,6 +59,8 @@ void Game::draw() {
     else{
         window_.ClearBackground(raylib::Color::Black());
         maze_->draw();
+        pacman_->draw();
+        text_renderer_.writeToScreen("Pacman Game", 30, raylib::Vector2(10, 10), raylib::Color::White());
     }
 
     window_.EndDrawing();
