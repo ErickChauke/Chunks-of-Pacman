@@ -66,6 +66,35 @@ void Game::loadResources() {
     helpTexture_ = raylib::Texture2D("../resources/brick.png");
 }
 
-void Game::drawSplash() {}
-void Game::drawStart() {}
-void Game::drawControls() {}
+void Game::drawSplash() {
+    window_.ClearBackground(raylib::Color::White());
+    splashTexture_.Draw(
+    raylib::Vector2(
+        (window_.GetWidth() - splashTexture_.GetWidth()) / 2,
+        (window_.GetHeight() - splashTexture_.GetHeight()) / 2
+        )
+    );
+    
+    DrawText("PRESS", window_.GetWidth() / 2 - 100, window_.GetHeight() - 200, 20, WHITE);
+    DrawText("F1", window_.GetWidth() / 2 - 20, window_.GetHeight() - 200, 20, Color{static_cast<unsigned char>(GetRandomValue(0, 255)), static_cast<unsigned char>(GetRandomValue(0, 255)), static_cast<unsigned char>(GetRandomValue(0, 255)), 255});
+    DrawText("FOR HELP", window_.GetWidth() / 2 + 8, window_.GetHeight() - 200, 20, WHITE);
+    DrawText("PRESS", window_.GetWidth() / 2 - 100 - 30, window_.GetHeight() - 175, 20, WHITE);
+    DrawText("ENTER", window_.GetWidth() / 2 - 20 - 30, window_.GetHeight() - 175, 20, Color{static_cast<unsigned char>(GetRandomValue(0, 255)), static_cast<unsigned char>(GetRandomValue(0, 255)), static_cast<unsigned char>(GetRandomValue(0, 255)), 255});
+    DrawText("TO START", window_.GetWidth() / 2 + 58 - 30, window_.GetHeight() - 175, 20, WHITE); 
+}
+
+void Game::drawStart() {
+    window_.ClearBackground(raylib::Color::Black());
+    text_renderer_.writeToScreen("Starting Game ...", 50, raylib::Vector2(window_.GetWidth() / 2,  window_.GetHeight())/2, raylib::Color::White());
+}
+
+void Game::drawControls() {
+    helpTexture_.Draw(
+    raylib::Vector2(
+        (window_.GetWidth() - splashTexture_.GetWidth()) / 2,
+        (window_.GetHeight() - splashTexture_.GetHeight()) / 2
+        )
+    );
+    window_.ClearBackground(raylib::Color::Black());
+    text_renderer_.writeToScreen("Controls ...", 50, raylib::Vector2(window_.GetWidth() / 2 -100,  window_.GetHeight()-100)/2, raylib::Color::White());
+}
