@@ -13,6 +13,10 @@ public:
     raylib::Vector2 getPacmanStartPosition() const { return pacmanStartPos_; }
     
     bool Maze::isWall(int x, int y) const;
+    bool Maze::isDot(int x, int y) const;
+    bool Maze::isPowerPellet(int x, int y) const;
+    void Maze::removeDot(int x, int y) ;
+    
 private:
     std::vector<std::string> grid_;
     raylib::Texture2D wallTexture_;

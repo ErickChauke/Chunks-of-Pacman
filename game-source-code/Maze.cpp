@@ -48,3 +48,22 @@ bool Maze::isWall(int x, int y) const {
     {return true;  } // Treat out of bounds as walls
     return grid_[y][x] == '#';
 }
+bool Maze::isDot(int x, int y) const {
+    if (x < 0 || x >= width_ || y < 0 || y >= height_) 
+    {return false;}
+    return grid_[y][x] == '.';
+}
+
+bool Maze::isPowerPellet(int x, int y) const {
+    if (x < 0 || x >= width_ || y < 0 || y >= height_) 
+    {return false;}
+    return grid_[y][x] == 'o';
+}
+
+void Maze::removeDot(int x, int y) {
+    if (x >= 0 && x < width_ && y >= 0 && y < height_) 
+    {  
+        if (grid_[y][x] == '.' || grid_[y][x] == 'o') 
+        {grid_[y][x] = ' ';}
+    }
+}
