@@ -1,5 +1,6 @@
 #pragma once
 #include "GameInterface.h"
+#include "Text.h"
 #include <raylib-cpp.hpp>
 
 class Game : public GameInterface {
@@ -17,6 +18,10 @@ protected:
 
 private:
     raylib::Window window_;
+    raylib::Font font_;
+    Text text_renderer_;
+    raylib::Texture2D splashTexture_;
+    raylib::Texture2D helpTexture_;
     bool showingSplash_;
     bool showGamePlay_;
     float startDuration_;
