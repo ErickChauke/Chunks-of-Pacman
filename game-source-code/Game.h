@@ -28,4 +28,8 @@ private:
     float startTimer_; 
     bool helpWindow = false;
     bool gameplayWindow = false;
+
+    void drawSplash();
+    void drawStart();
+    void drawControls();
 };
