@@ -28,7 +28,69 @@ void Pacman::setPosition(const raylib::Vector2& newPosition) {
     destRec_.y = position_.y + offset_.y;
 }
 
-void Pacman::update(Maze& maze) {}
+void Pacman::update(Maze& maze) {
+    raylib::Vector2 newPosition = position_;
+
+    // Handle input and set next direction
+    if (IsKeyPressed(KEY_RIGHT)) { nextDirection_ = RIGHT; }
+    if (IsKeyPressed(KEY_LEFT))  { nextDirection_ = LEFT; }
+    if (IsKeyPressed(KEY_DOWN))  { nextDirection_ = DOWN; }
+    if (IsKeyPressed(KEY_UP))    { nextDirection_ = UP; }
+
+    // Switch direction if possible
+    if (nextDirection_ != NONE) {
+        raylib::Vector2 tempPosition = position_;
+        switch (nextDirection_) {
+            case RIGHT: tempPosition.x += speed_; break;
+            case LEFT:  tempPosition.x -= speed_; break;
+            case DOWN:  tempPosition.y += speed_; break;
+            case UP:    tempPosition.y -= speed_; break;
+            default: break;
+        }
+
+        if (canMove(maze, tempPosition)) {
+            currentDirection_ = nextDirection_;
+            nextDirection_ = NONE;
+        }
+    }
+
+    // Move in the current direction
+    switch (currentDirection_) {
+        case RIGHT: newPosition.x += speed_; rotation_ = 0.0f; break;
+        case LEFT:  newPosition.x -= speed_; rotation_ = 180.0f; break;
+        case DOWN:  newPosition.y += speed_; rotation_ = 90.0f; break;
+        case UP:    newPosition.y -= speed_; rotation_ = 270.0f; break;
+        default: break;
+    }
+
+    // Update Pacman's position if the move is valid
+    if (canMove(maze, newPosition)) {
+        position_ = newPosition;
+    }
+
+    // Update sprite animation
+    animationTime_ += GetFrameTime();
+    if (animationTime_ >= frameDuration_) {
+        currentFrame_ = (currentFrame_ + 1) % totalFrames_;  // Cycle between 0, 1, 2
+        animationTime_ = 0.0f;
+    }
+
+    // Update sourceRec to select the current sprite frame
+    sourceRec_.x = static_cast<float>(currentFrame_) * texture_.GetWidth() / totalFrames_;
+
+    // Update Pacman's destination position for drawing
+    destRec_.x = position_.x + offset_.x;
+    destRec_.y = position_.y + offset_.y;
+
+    // Check for dot or pellet collisions
+    int centerX = static_cast<int>((position_.x + spriteSize_ / 2) / tileSize_);
+    int centerY = static_cast<int>((position_.y + spriteSize_ / 2) / tileSize_);
+    
+    if (maze.isDot(centerX, centerY) || maze.isPowerPellet(centerX, centerY)) {
+        maze.removeDot(centerX, centerY);
+        // Add score or play sound here
+    }
+}
 
 void Pacman::draw() {
     texture_.Draw(sourceRec_, destRec_, raylib::Vector2(spriteSize_ / 2.0f, spriteSize_ / 2.0f), rotation_, raylib::Color::Yellow());
