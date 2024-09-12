@@ -42,3 +42,9 @@ void Maze::draw() {
         }
     }
 }
+
+bool Maze::isWall(int x, int y) const {
+    if (x < 0 || x >= width_ || y < 0 || y >= height_) 
+    {return true;  } // Treat out of bounds as walls
+    return grid_[y][x] == '#';
+}

@@ -34,4 +34,26 @@ void Pacman::draw() {
     texture_.Draw(sourceRec_, destRec_, raylib::Vector2(spriteSize_ / 2.0f, spriteSize_ / 2.0f), rotation_, raylib::Color::Yellow());
 }
 
-bool Pacman::canMove(const Maze& maze, const raylib::Vector2& newPosition) const {}
+bool Pacman::canMove(const Maze& maze, const raylib::Vector2& newPosition) const {
+    int cornerX[4] = {
+        static_cast<int>(newPosition.x),
+        static_cast<int>(newPosition.x + spriteSize_ - 1),
+        static_cast<int>(newPosition.x),
+        static_cast<int>(newPosition.x + spriteSize_ - 1)
+    };
+    int cornerY[4] = {
+        static_cast<int>(newPosition.y),
+        static_cast<int>(newPosition.y),
+        static_cast<int>(newPosition.y + spriteSize_ - 1),
+        static_cast<int>(newPosition.y + spriteSize_ - 1)
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        int checkX = cornerX[i] / tileSize_;
+        int checkY = cornerY[i] / tileSize_;
+        if (maze.isWall(checkX, checkY)) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -11,7 +11,8 @@ public:
     void draw();
     int getTileSize() const { return tileSize_; }
     raylib::Vector2 getPacmanStartPosition() const { return pacmanStartPos_; }
-
+    
+    bool Maze::isWall(int x, int y) const;
 private:
     std::vector<std::string> grid_;
     raylib::Texture2D wallTexture_;
